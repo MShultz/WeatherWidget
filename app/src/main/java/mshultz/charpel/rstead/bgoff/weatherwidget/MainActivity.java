@@ -1,10 +1,12 @@
 package mshultz.charpel.rstead.bgoff.weatherwidget;
 
+import android.content.ClipData;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.ListMenuItemView;
 import android.util.Log;
 import android.view.View;
 import android.webkit.DownloadListener;
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         downloadMaterial = new DownloadMaterial();
 
-        Spinner postalCodeSpinner = (Spinner)findViewById(R.id.locationSpinner);
+        final Spinner postalCodeSpinner = (Spinner)findViewById(R.id.locationSpinner);
         String[] postalCodes = new String[] {"84102", "83340", "71730", "12078", "99223"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, postalCodes);
         postalCodeSpinner.setAdapter(adapter);
@@ -73,16 +75,12 @@ public class MainActivity extends AppCompatActivity {
         postalCodeSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onZipCodeClick(view);
+                zipCodeData(postalCodeSpinner.getSelectedItem().toString());
             }
         });
-
-        onZipCodeClick(null);
     }
 
-    public void onZipCodeClick(View view){
-        //String zipCode = (TextView)findViewById(R.id.whateverthehellryancallsthetextview);
-        String zipCode = "84102";
+    public void zipCodeData(String zipCode){
         try{
             String content = downloadMaterial.execute("http://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + "&units=imperial&appid=6048b5656c2d7f3ec3164e71540edca5").get();
             JSONObject jsonObject = new JSONObject(content);
