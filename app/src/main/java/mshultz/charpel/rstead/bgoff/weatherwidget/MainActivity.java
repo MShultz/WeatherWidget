@@ -52,23 +52,6 @@ public class MainActivity extends AppCompatActivity {
             return result;
         }
 
-        @Override
-        protected void onPostExecute(String s){
-            super.onPostExecute(s);
-            try{
-                JSONObject jsonObject = new JSONObject(s);
-                Log.i("name: ", jsonObject.getString("name"));
-                Log.i("weather: ", jsonObject.getString("weather"));
-                JSONArray jsonArray = new JSONArray(jsonObject.getString("weather"));
-                for(int i = 0; i < jsonArray.length(); i++){
-                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                    Log.i("main: ", jsonObject1.getString("main"));
-                    Log.i("description: ", jsonObject1.getString("description"));
-                }
-            }catch(JSONException e){
-                e.printStackTrace();
-            }
-        }
     }
 
     DownloadMaterial downloadMaterial;
@@ -79,15 +62,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         downloadMaterial = new DownloadMaterial();
 
+        onZipCodeClick(null);
     }
 
     public void onZipCodeClick(View view){
         //String zipCode = (TextView)findViewById(R.id.whateverthehellryancallsthetextview);
         String zipCode = "84102";
         try{
-            String content = downloadMaterial.execute("http://api.openweathermap.org/data/2.5/weather?p=" + zipCode + "&units=imperial&appid=6048b5656c2d7f3ec3164e71540edca5").get();
+            String content = downloadMaterial.execute("http://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + "&units=imperial&appid=6048b5656c2d7f3ec3164e71540edca5").get();
             JSONObject jsonObject = new JSONObject(content);
             JSONArray weatherArray = new JSONArray(jsonObject.getString("weather"));
+            JSONObject mainObject = new JSONObject(jsonObject.getString("main"));
+            String cityName = jsonObject.getString("name");
+            String temperature = mainObject.getString("temp");
+            String temperatureMin = mainObject.getString("temp_min");
+            String temperatureMax = mainObject.getString("temp_max");
+            String weatherType = ((JSONObject)weatherArray.get(0)).getString("main");
+            String weatherDescription = ((JSONObject)weatherArray.get(0)).getString("description");
+            Log.i("NAME", cityName);
+            Log.i("TEMP", temperature);
+            Log.i("MIN", temperatureMin);
+            Log.i("MAX", temperatureMax);
+            Log.i("TYPE", weatherType);
+            Log.i("DESCRIPTION", weatherDescription);
         }catch(ExecutionException | InterruptedException e){
             Log.e("Thread was interrupted!", e.toString());
         }catch(JSONException e){
