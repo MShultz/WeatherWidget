@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.DownloadListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -61,6 +64,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         downloadMaterial = new DownloadMaterial();
+
+        Spinner postalCodeSpinner = (Spinner)findViewById(R.id.locationSpinner);
+        String[] postalCodes = new String[] {"84102", "83340", "71730", "12078", "99223"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, postalCodes);
+        postalCodeSpinner.setAdapter(adapter);
+
+        postalCodeSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onZipCodeClick(view);
+            }
+        });
 
         onZipCodeClick(null);
     }
