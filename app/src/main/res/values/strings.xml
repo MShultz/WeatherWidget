@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherWidget</string>
+    <string name="currentTemp">00</string>
+    <string name="minMaxTemp">00</string>
 </resources>

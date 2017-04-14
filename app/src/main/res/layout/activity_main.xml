@@ -7,12 +7,35 @@
     tools:context="mshultz.charpel.rstead.bgoff.weatherwidget.MainActivity">
 
     <TextView
+        android:id="@+id/currentTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="casual"
+        android:text="@string/currentTemp"
+        android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.07"
+        tools:layout_editor_absoluteX="147dp" />
+
+    <TextView
+        android:id="@+id/minMax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:text="@string/minMaxTemp"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="101dp" />
+
+    <Spinner
+        android:id="@+id/locationSpinner"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="179dp" />
 
 </android.support.constraint.ConstraintLayout>
